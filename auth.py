@@ -1,18 +1,31 @@
 from flask import *
 from jinja2 import TemplateNotFound
+from wtforms import *
 
-auth = Blueprint("auth", __name__, template_folder='templates', url_prefix='/auth')
+bp = Blueprint("auth", __name__, template_folder='templates', url_prefix='/auth')
 
 
-@auth.route('/')
+@bp.route('/')
 def homepage():
-    return render_template("endlesspages.html")
+    return render_template("auth/endlesspages.html")
 
-@auth.route('/login')
+@bp.route('/login')
 def login():
-    return render_template("login.html")
+    username = request.form("username")
+    password = request.form("password")
+    return render_template("auth/login.html")
 
 
-@auth.route('/register')
+@bp.route('/register', methods=["GET", "POST"])
 def register():
-    return render_template("signup.html")
+    if request.method == "POST":
+        username = request.form("name")
+        password = request.form("password")
+        email = request.form("email")
+        if not username:
+            error = 'Username is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif not email:
+            error = 'Email is required'
+        return render_template("auth/signup.html")
