@@ -17,6 +17,6 @@ document.getElementById('save').addEventListener("click", function() {
 ) 
 
 document.getElementById('cancel').addEventListener("click", function() { 
-	location.assign('homepage.html'); 
+	location.assign('homepage.templates');
 } 
 ) 
