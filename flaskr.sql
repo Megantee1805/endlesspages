@@ -1,5 +1,7 @@
-DROP Table Profile if exists ;
+DROP Table if exists Profile;
 
-Create Table Profile if not exists ( 
-    
+Create Table if not exists Profile  (
+    Name  TEXT PRIMARY KEY,
+    Email Text,
+    Password TEXT
 )
