@@ -1,6 +1,7 @@
 from flask import *
 from jinja2 import TemplateNotFound
 from wtforms import *
+from db import *
 
 bp = Blueprint("auth", __name__, template_folder='templates', url_prefix='/auth')
 
@@ -11,6 +12,7 @@ def homepage():
 
 @bp.route('/login')
 def login():
+    get_db()
     username = request.form("username")
     password = request.form("password")
     return render_template("auth/login.html")
@@ -18,6 +20,7 @@ def login():
 
 @bp.route('/register', methods=["GET", "POST"])
 def register():
+    get_db()
     if request.method == "POST":
         username = request.form("name")
         password = request.form("password")
