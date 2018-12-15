@@ -15,6 +15,16 @@ def login():
     db = get_db()
     username = request.form("username")
     password = request.form("password")
+    @bp.before_app_request
+    def load_logged_in_user():
+            user_id = session.get('user_id')
+
+            if user_id is None:
+                g.user = None
+            else:
+                g.user = get_db().execute(
+                    'SELECT * FROM user WHERE id = ?', (user_id,)
+                ).fetchone()
     return render_template("auth/login.html")
 
 
@@ -31,4 +41,18 @@ def register():
             error = 'Password is required.'
         elif not email:
             error = 'Email is required'
-        return render_template("auth/signup.html")
+            if error is None:
+                return redirect(url_for('login'))
+            return render_template("auth/signup.html")
+
+@bp.route('/homepage')
+def homepage():
+    return render_template("auth/homepage.html")
+
+@bp.route('/profile')
+def profile():
+    return render_template("auth/profile.html")
+
+@bp.route('/settings')
+def settings():
+    return render_template("auth/settings.html")
