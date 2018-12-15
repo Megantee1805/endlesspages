@@ -12,7 +12,7 @@ def homepage():
 
 @bp.route('/login')
 def login():
-    get_db()
+    db = get_db()
     username = request.form("username")
     password = request.form("password")
     return render_template("auth/login.html")
@@ -20,7 +20,7 @@ def login():
 
 @bp.route('/register', methods=["GET", "POST"])
 def register():
-    get_db()
+    db = get_db()
     if request.method == "POST":
         username = request.form("name")
         password = request.form("password")
